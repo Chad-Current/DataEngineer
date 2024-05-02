@@ -1,0 +1,115 @@
+Base File (Import Pandas and SciKit Learn)
+User Graphic Interface File (GUI)
+Query User Factors: Genre, Actors/Directors, Similiar Movies, Mood;  Streaming Service/Platform, Release Year, Review Platform
+
+Genrate GUI with pyuic5 .\mainwindow.ui -o .\GUI.py -x    in terminal
+
+ComboBox         self.comboBox.addItems(["Action","Adventure","Animation","Comedy","Drama","Documentary","Fantasy","Horror","Romance","Science Fiction"])
+TextInput        
+
+# """
+#     dates
+#     page
+#     results      
+#     total_pages:
+#         Set on the GUI.py to max length with print(self.datarep['total_pages'])   
+#     total_results
+
+
+MovieDataBase.py
+
+        # self.orginal_language = "orignal_language"
+        # self.original_title = "original_title"
+        # self.overview = "overview"
+        # self.popularity = 0
+        # self.release_data = datetime(1900,1,1)
+        # """Don't forgot to change to isoformat for readability
+        #   in PyQt5 Window self.release_date.isoformat()"""
+        # self.title = "title"
+        # self.video = False
+        # self.vote_average = 0
+        # self.vote_count = 0
+{
+  "genres": [
+    {
+      "id": 28,
+      "name": "Action"
+    },
+    {
+      "id": 12,
+      "name": "Adventure"
+    },
+    {
+      "id": 16,
+      "name": "Animation"
+    },
+    {
+      "id": 35,
+      "name": "Comedy"
+    },
+    {
+      "id": 80,
+      "name": "Crime"
+    },
+    {
+      "id": 99,
+      "name": "Documentary"
+    },
+    {
+      "id": 18,
+      "name": "Drama"
+    },
+    {
+      "id": 10751,
+      "name": "Family"
+    },
+    {
+      "id": 14,
+      "name": "Fantasy"
+    },
+    {
+      "id": 36,
+      "name": "History"
+    },
+    {
+      "id": 27,
+      "name": "Horror"
+    },
+    {
+      "id": 10402,
+      "name": "Music"
+    },
+    {
+      "id": 9648,
+      "name": "Mystery"
+    },
+    {
+      "id": 10749,
+      "name": "Romance"
+    },
+    {
+      "id": 878,
+      "name": "Science Fiction"
+    },
+    {
+      "id": 10770,
+      "name": "TV Movie"
+    },
+    {
+      "id": 53,
+      "name": "Thriller"
+    },
+    {
+      "id": 10752,
+      "name": "War"
+    },
+    {
+      "id": 37,
+      "name": "Western"
+    }
+  ]
+}
+    # response = requests.get(upcoming , headers=headers)
+    # d = response.json() #type dict
+    # for k,v in d.items():
+    #     print(k)
