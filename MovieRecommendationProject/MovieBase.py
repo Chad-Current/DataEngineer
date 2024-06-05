@@ -4,6 +4,7 @@ import json
 import pandas as pd
 from datetime import datetime
 
+
 base_url = "https://api.themoviedb.org/3/"
 authenticationurl = "authentication"
 popularmovies = "/movie/popular?language=en-US&page="
@@ -15,7 +16,7 @@ actorquery = "search/person?query=duchovny&include_adult=false&language=en-US&pa
 
 headers = {
     "accept": "application/json",
-    "Authorization": 
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlY2IyMzNjNmU2ZmVhN2U5YWM3OWJlMTg0YWJiNTdiYyIsInN1YiI6IjY2MmE4ZTVhOTljOTY0MDExYjM5YzA1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-1fy7KBQp5ijVqI-0WVQANLeAAZZQqlAkvSaxvhIyws"
 }
 
 class BaseAPI:
@@ -26,17 +27,18 @@ class BaseAPI:
         response = requests.get(f"{self.base_url}{endpoint}{page}",headers=self.headers)
         response.raise_for_status()
         return response.json()
-    
-class PopularAPI(BaseAPI):
-    def __init__(self):
-        super().__init__(base_url)
 
-def Main():
-    b = BaseAPI()
-    p = PopularAPI()
-    a = p.make_request(popularmovies,1)
-    print(a)
+def PopularAPI():
+    base = BaseAPI()
+    requested = base.make_request(popularmovies,1)
+    return requested
+
+def UpcomingAPI():
+    base = BaseAPI()
+    requested = base.make_request(upcoming,1)
+    return requested
+
 
 if __name__ == "__main__":
-    Main()
+    print("Running Movie Base.py")
 
