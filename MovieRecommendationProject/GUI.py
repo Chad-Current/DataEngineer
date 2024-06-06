@@ -12,7 +12,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from MovieBase import BaseAPI, PopularAPI, UpcomingAPI
 
 class Ui_MainWindow(object):
-    clicked = 0
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(850, 901)
@@ -1075,21 +1074,39 @@ class Ui_MainWindow(object):
         self.previousButton.setText(_translate("MainWindow", "Previous"))
         self.nextButton.setText(_translate("MainWindow", "Next"))
 
-    def the_button_was_clicked(self):
-        self.clicked += 1
-        print(f'Button was clicked {self.clicked}')
+class ScreenView():
+    def __init__(self):
+        self.clicked = 0
+        self.totalPages = 0
+        super().__init__()
+
+    def next_button_clicked(self) -> None:
+        if self.clicked < self.totalPages:
+            self.clicked += 1
+            print("NEXT:  On page: {}".format(self.clicked))
+        else:
+            print("Can't go any further")
+
+    def previous_button_clicked(self) -> None:
+        if self.clicked <= 0:
+            print("Can't go back further on page {}".format(self.clicked))
+        else:    
+            self.clicked -= 1
+            print("PREVIOUS:  On page: {}".format(self.clicked))
+
+
 
 if __name__ == "__main__":
     # import sys
- 
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
+    sc = ScreenView()
     ui.setupUi(MainWindow)
     MainWindow.show()
     base = PopularAPI()
-    page = base['total_pages']
-    page = f'Total pages: {str(page)}'
-    ui.listWidget.addItem(page)
-    ui.nextButton.clicked.connect(ui.the_button_was_clicked)
+    sc.totalPages = int(base.requested['total_pages'])
+    ui.listWidget.addItem(str(sc.totalPages))
+    ui.nextButton.clicked.connect(sc.next_button_clicked)
+    ui.previousButton.clicked.connect(sc.previous_button_clicked)
     sys.exit(app.exec_())

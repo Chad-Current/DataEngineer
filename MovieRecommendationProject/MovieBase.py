@@ -7,6 +7,7 @@ from datetime import datetime
 
 base_url = "https://api.themoviedb.org/3/"
 authenticationurl = "authentication"
+
 popularmovies = "/movie/popular?language=en-US&page="
 topRated = "movie/top_rated?language=en-US&page="
 upcoming = "movie/upcoming?language=en-US&page="
@@ -21,23 +22,36 @@ headers = {
 
 class BaseAPI:
     def __init__(self, base_url=base_url, headers=headers):
-         self.base_url = base_url
-         self.headers = headers
+        self.base_url = base_url
+        self.headers = headers
     def make_request(self,endpoint,page):
-        response = requests.get(f"{self.base_url}{endpoint}{page}",headers=self.headers)
-        response.raise_for_status()
-        return response.json()
+        self.response = requests.get(f"{self.base_url}{endpoint}{page}",headers=self.headers)
+        self.response.raise_for_status()
+        return self.response.json()
 
-def PopularAPI():
-    base = BaseAPI()
-    requested = base.make_request(popularmovies,1)
-    return requested
+class PopularAPI(BaseAPI):
+    def __init__(self,base_url=base_url,headers=headers):
+        self.endpoint = "/movie/popular?language=en-US&page="
+        super().__init__(base_url,headers=headers)
+        self.requested = self.make_request(self.endpoint,page=1)
 
-def UpcomingAPI():
-    base = BaseAPI()
-    requested = base.make_request(upcoming,1)
-    return requested
+class UpcomingAPI(BaseAPI):
+    def __init__(self,base_url=base_url,headers=headers):
+        self.endpoint = "movie/upcoming?language=en-US&page="
+        super().__init__(base_url,headers=headers)
+        self.requested = self.make_request(self.endpoint,page=1)
 
+class TopRatedAPI(BaseAPI):
+    def __init__(self,base_url=base_url,headers=headers):
+        self.endpoint = "movie/top_rated?language=en-US&page="
+        super().__init__(base_url,headers=headers)
+        self.requested = self.make_request(self.endpoint,page=1)
+
+class ActorQueryAPI(BaseAPI):
+    def __init__(self,base_url=base_url,headers=headers):
+        self.endpoint = "search/person?query=duchovny&include_adult=false&language=en-US&page="
+        super().__init__(base_url,headers=headers)
+        self.requested = self.make_request(self.endpoint,page=1)
 
 if __name__ == "__main__":
     print("Running Movie Base.py")
