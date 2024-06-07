@@ -53,6 +53,47 @@ class ActorQueryAPI(BaseAPI):
         super().__init__(base_url,headers=headers)
         self.requested = self.make_request(self.endpoint,page=1)
 
+
+class Genres(PopularAPI,UpcomingAPI,TopRatedAPI,ActorQueryAPI):
+    def __init__(self, *createAPIobj) -> None:
+        self.genre = {"Action":28,"Adventure":12,"Animation":16,"Comedy":35,"Crime":80,
+                      "Documentary":99,"Drama":18,"Family":10751,"Fantasy":14,"History":36,
+                      "Horror":27,"Music":10402,"Mystery":9648,"Romance":10749,
+                      "Science Fiction":878,"Thriller":53,"Western":37}
+        self.categoryDir = ""
+        # self.pop, self.upcoming, self.toprated, self.actorquery = ('p','u','t','a')
+        super().__init__()
+        self.FetchAPI = {'a':ActorQueryAPI(), 'p':PopularAPI(),
+                    't':TopRatedAPI(), 'u':UpcomingAPI()}
+        # api = self.pop
+        # key = self.FetchAPI[api]
+        # print('key ', key.endpoint)
+#Start here with returning choices matching genre ids
+    def choice(self,cat,tag):
+        answer = [x for x,y in tag.items() if y == True]
+        self.retrieveAPI = self.FetchAPI[answer[0]]
+        print(self.retrieveAPI)
+        # print(answer)
+        # print(type(answer))
+        for key, value in self.genre.items():
+            # print(key,value)
+            # print(self.categoryDir)
+            # print('printing args',args)
+            if key in cat:
+                self.categoryDir = value
+                print(self.categoryDir)
+                return self.categoryDir
+    # def foundGenre(self):
+    #     self.pop.requested.get('total_results',{})
+    #     for i in range(1,11):
+    #         self.categoryDir = self.pop.requested.get('results',{})[i]['genre_ids']
+    #         print(self.categoryDir)
+#End returning choices
+
+
+
+
+
 if __name__ == "__main__":
     print("Running Movie Base.py")
 

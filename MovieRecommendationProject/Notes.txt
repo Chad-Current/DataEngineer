@@ -1,8 +1,10 @@
 Base File (Import Pandas and SciKit Learn)
 User Graphic Interface File (GUI)
-Query User Factors: Genre, Actors/Directors, Similiar Movies, Mood;  Streaming Service/Platform, Release Year, Review Platform
+>>  qt5-tools designer
+Genrate GUI with 
+>> pyuic5 .\mainwindow.ui -o .\GUI.py -x    in terminal
 
-Genrate GUI with pyuic5 .\mainwindow.ui -o .\GUI.py -x    in terminal
+Query User Factors: Genre, Actors/Directors, Similiar Movies, Mood;  Streaming Service/Platform, Release Year, Review Platform
 
 ComboBox         self.comboBox.addItems(["Action","Adventure","Animation","Comedy","Drama","Documentary","Fantasy","Horror","Romance","Science Fiction"])
 TextInput        
@@ -14,6 +16,10 @@ TextInput
 #     total_pages:
 #         Set on the GUI.py to max length with print(self.datarep['total_pages'])   
 #     total_results
+
+#ACTOR lineEdit 
+#GENRE comboBox
+#RATING SCALE horizontalSlider
 
 
 MovieDataBase.py
@@ -92,16 +98,8 @@ MovieDataBase.py
       "name": "Science Fiction"
     },
     {
-      "id": 10770,
-      "name": "TV Movie"
-    },
-    {
       "id": 53,
       "name": "Thriller"
-    },
-    {
-      "id": 10752,
-      "name": "War"
     },
     {
       "id": 37,
