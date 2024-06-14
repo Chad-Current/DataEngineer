@@ -17,6 +17,8 @@ TextInput
 #         Set on the GUI.py to max length with print(self.datarep['total_pages'])   
 #     total_results
 
+# for api called loop through each page ['page'] for ['total_pages'] and concat to dataframe
+
 #ACTOR lineEdit 
 #GENRE comboBox
 #RATING SCALE horizontalSlider
