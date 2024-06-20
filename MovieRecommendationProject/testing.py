@@ -9,47 +9,62 @@ headers = {
 }
 base_url = "https://api.themoviedb.org/3/"
 authenticationurl = "authentication"
-# ACTOR = f"search/person?query={0}&include_adult=false&language=en-US&page=".format(input())
 
-class BaseAPI:
-    def __init__(self, base_url=base_url, headers=headers):
+    
+class ActorAPI():
+    def __init__(self,page=1,segmentOne="",segmentTwo=None,base_url=base_url,headers=headers) -> None:
+        self.page = page
+        self.segmentOne = segmentOne
+        self.segmentTwo = segmentTwo
         self.base_url = base_url
         self.headers = headers
-    def make_request(self,endpoint,page=1):
-        self.response = requests.get(f"{self.base_url}{endpoint}{page}",headers=self.headers)
+        _spacer = '%20'
+        if self.segmentTwo == None:
+            self.endpoint = f'search/person?query={self.segmentOne}&include_adult=false&language=en-US&page='
+        else:
+            self.endpoint = f'search/person?query={self.segmentOne}{_spacer}{self.segmentTwo}&include_adult=false&language=en-US&page='
+    def make_request(self,page=1):
+        self.response = requests.get(f"{self.base_url}{self.endpoint}{page}",headers=self.headers)
         self.response.raise_for_status()
         return self.response.json()
 
-class ReccomendationAPI(BaseAPI):
-    def __init__(self, movieId, page=1, base_url=base_url, headers=headers):
-        self.movieId = movieId
-        self.page = page
+class MovieCredits():
+    def __init__(self, actorid=1,base_url=base_url,headers=headers):
+        self.actorid = actorid
+        self.base_url = base_url
+        self.headers = headers
+        self.endpoint = f'/person/{self.actorid}/movie_credits'
+    def make_request(self):
+        self.response = requests.get(f"{self.base_url}{self.endpoint}",headers=self.headers)
+        self.response.raise_for_status()
+        return self.response.json()
+
+class ReccomendationAPI():
+    def __init__(self,movieID,base_url=base_url, headers=headers):
+        self.base_url = base_url
+        self.headers = headers
+        self.movieId = movieID
         self.endpoint = f'movie/{self.movieId}/recommendations?language=en-US&page='
-        print(self.endpoint)
-        super().__init__(base_url, headers=headers)
-        self.requested = self.make_request(endpoint=self.endpoint,page=self.page)
+    def make_request(self,page=1):
+        self.response = requests.get(f"{self.base_url}{self.endpoint}{page}",headers=self.headers)
+        self.response.raise_for_status()
+        return self.response.json()
 
 
-
+class Genres():
+    def __init__(self) -> None:
+        self.genre = {'Action': 28, 'Adventure': 12, 'Animation': 16, 'Comedy': 35, 'Crime': 80, 'Documentary': 99, \
+                      'Drama': 18, 'Family': 10751, 'Fantasy': 14, 'History': 36, 'Horror': 27, 'Music': 10402, \
+                        'Mystery': 9648, 'Romance': 10749, 'Science Fiction': 878, 'TV Movie': 10770, 'Thriller': 53, \
+                              'War': 10752, 'Western': 37}
+        self.categoryDir = ""
+    def choice(self,cat):
+        for key, value in self.genre.items():
+            if key in cat:
+                self.categoryDir = value
+                return self.categoryDir
+            
+    
 if __name__=="__main__":
-    b = BaseAPI()
-    print('Who\'s your actor or actress of choice? ')
-    i = input()
-    ACTOR = f"search/person?query={i}&include_adult=false&language=en-US&page=".format()
-    c = b.make_request(endpoint=ACTOR)
-    # print(c['results'][0]['known_for'][0]['id'])
-    d = c['results'][0]['known_for'][0]['id']
-    e = ReccomendationAPI(d)
-    # print(e.requested)
-    print(f'page on: ',e.requested['page'])
-    print(f'total pages on: ',e.requested['total_pages'])
-    while e.requested['page'] <= e.requested['total_pages']:
-        for x in range(len(e.requested['results'])):
-            print(f'{x}: ',e.requested['results'][x]['title'])
-        nextpage =+ e.requested['page']+1
-        print(f'next page ',nextpage)
-        c = e.make_request(endpoint=ACTOR,page=nextpage)
-        d = c['results'][0]['known_for'][0]['id']
-        e = ReccomendationAPI(d,page=nextpage)
-        # print(e.requested)
-        print('Here are some other reccomended movies based on your actor of interest')
+    print('Running testing.py')
+
