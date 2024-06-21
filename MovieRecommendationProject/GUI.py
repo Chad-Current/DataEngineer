@@ -761,9 +761,7 @@ class ScreenView(Ui_MainWindow):
             title.append(item[0])
         self.ui.rListWidget.clear()
         self.ui.rListWidget.addItems(title)
-        print(setTextList[selected_id][1])
         self.movieSelected = self.mrecomend(setTextList[selected_id][1])
-        # self.ui.mListWidget.clear()
 
 ## Display recommended Movie Titles
     def mrecomend(self,selected_id) -> None:
@@ -774,8 +772,6 @@ class ScreenView(Ui_MainWindow):
         for i in range(0,len(self.recommend['results'])):
             view.append(f'{self.recommend['results'][i]['title']}')
         self.ui.rListWidget.addItems(view)
-        # print(view)
-
 
 
 if __name__ == "__main__":
