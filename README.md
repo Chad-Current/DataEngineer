@@ -1,3 +1,3 @@
 # DataEngineer
 Data Engineer Projects
-[Open Movie Recommendation Tool](GUI.py)
+[Open Movie Recommendation Tool](./MovieRecommendationProject/GUI.py)
